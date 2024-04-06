@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import ProductList from "./product-list";
 import Modal from "./modal";
+import ModalProDuctDetail from "./modal-product-detail";
 import data from './data.json';
 
 export default class ShoesStore extends Component {
@@ -9,6 +10,7 @@ export default class ShoesStore extends Component {
 
         this.state = {
             productList: data,
+            product: null,
             productListCart: [],
         }
     }
@@ -75,6 +77,12 @@ export default class ShoesStore extends Component {
             productListCart: productListCartClone
         });
     }
+    
+    handleProductDetail = (product) => {
+        this.setState({
+            product: product
+        });
+    }
 
     getTotalQtyInCart = () => {
         return this.state.productListCart.length;
@@ -95,8 +103,9 @@ export default class ShoesStore extends Component {
                     </button>
                 </div>
                 <hr />
-                <ProductList productList={this.state.productList} getProductItemAddToCart={this.handleProductItemAddToCart} />
-                <Modal productListCart={this.state.productListCart} getProductDeleteCart={this.handleDeleteProductCart} getProductCartUpdateQty={this.handleProductCartUpdateQty}/>
+                <ProductList productList={this.state.productList} getProductItemAddToCart={this.handleProductItemAddToCart} getProductDetail={this.handleProductDetail} />
+                <Modal productListCart={this.state.productListCart} getProductDeleteCart={this.handleDeleteProductCart} getProductCartUpdateQty={this.handleProductCartUpdateQty} />
+                <ModalProDuctDetail product={this.state.product} />
             </div>
         );
     }
